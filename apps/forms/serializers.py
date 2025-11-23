@@ -8,7 +8,8 @@ from .models import FormSubmission, FormTemplate
 class FormTemplateSerializer(serializers.ModelSerializer):
     class Meta:
         model = FormTemplate
-        fields = ("id", "template_type", "title", "description", "source_pdf", "schema", "created_at", "updated_at")
+        fields = ("id", "template_type", "title", "description",
+                  "source_pdf", "schema", "created_at", "updated_at")
         read_only_fields = fields
 
 
@@ -20,7 +21,8 @@ def _collect_required_keys(schema: dict) -> Set[str]:
             key = field.get("key")
             if key:
                 required.add(key)
-        nested_fields: Iterable[dict] = field.get("fields", []) or field.get("columns", [])
+        nested_fields: Iterable[dict] = field.get(
+            "fields", []) or field.get("columns", [])
         for nested in nested_fields:
             visit(nested)
 
@@ -31,7 +33,8 @@ def _collect_required_keys(schema: dict) -> Set[str]:
 
 
 class FormSubmissionSerializer(serializers.ModelSerializer):
-    template = serializers.PrimaryKeyRelatedField(queryset=FormTemplate.objects.all(), required=False)
+    template = serializers.PrimaryKeyRelatedField(
+        queryset=FormTemplate.objects.all(), required=False)
     template_type = serializers.CharField()
 
     class Meta:
@@ -58,18 +61,21 @@ class FormSubmissionSerializer(serializers.ModelSerializer):
         try:
             template = FormTemplate.objects.get(template_type=template_type)
         except FormTemplate.DoesNotExist:
-            raise serializers.ValidationError({"template_type": "Template type not found"})
+            raise serializers.ValidationError(
+                {"template_type": "Template type not found"})
 
         data = attrs.get("data") or {}
         required_keys = _collect_required_keys(template.schema)
         missing = [key for key in required_keys if not data.get(key)]
         if missing:
-            raise serializers.ValidationError({"data": f"Missing required answers for: {', '.join(missing)}"})
+            raise serializers.ValidationError(
+                {"data": f"Missing required answers for: {', '.join(missing)}"})
 
         attrs["template"] = template
         attrs["template_type"] = template.template_type
         return attrs
 
     def create(self, validated_data):
-        user = self.context["request"].user if self.context.get("request") else None
+        user = self.context["request"].user if self.context.get(
+            "request") else None
         return FormSubmission.objects.create(created_by=user, **validated_data)

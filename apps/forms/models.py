@@ -24,7 +24,8 @@ class FormSubmission(models.Model):
         ("submitted", "Submitted"),
     )
 
-    template = models.ForeignKey(FormTemplate, on_delete=models.CASCADE, related_name="submissions")
+    template = models.ForeignKey(
+        FormTemplate, on_delete=models.CASCADE, related_name="submissions")
     template_type = models.CharField(max_length=100)
     ho_ten = models.CharField(max_length=255)
     nam_sinh = models.PositiveIntegerField(null=True, blank=True)
@@ -33,7 +34,8 @@ class FormSubmission(models.Model):
     xa = models.CharField(max_length=255, blank=True)
     tinh = models.CharField(max_length=255, blank=True)
     data = models.JSONField(default=dict)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="submitted")
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default="submitted")
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name="form_submissions"
     )

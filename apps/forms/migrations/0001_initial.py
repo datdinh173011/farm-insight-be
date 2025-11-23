@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="FormTemplate",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("id", models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name="ID")),
                 ("template_type", models.CharField(max_length=100, unique=True)),
                 ("title", models.CharField(max_length=255)),
                 ("description", models.TextField(blank=True)),
@@ -28,7 +29,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="FormSubmission",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("id", models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name="ID")),
                 ("template_type", models.CharField(max_length=100)),
                 ("ho_ten", models.CharField(max_length=255)),
                 ("nam_sinh", models.PositiveIntegerField(blank=True, null=True)),

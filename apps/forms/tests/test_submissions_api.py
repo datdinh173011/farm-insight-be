@@ -8,7 +8,8 @@ from apps.forms.models import FormSubmission, FormTemplate
 
 class FormSubmissionApiTests(APITestCase):
     def setUp(self):
-        template_data = next(t for t in FORM_SCHEMAS if t["template_type"] == "nuoi-sau-canxi")
+        template_data = next(
+            t for t in FORM_SCHEMAS if t["template_type"] == "nuoi-sau-canxi")
         self.template = FormTemplate.objects.create(
             template_type=template_data["template_type"],
             title=template_data["title"],
@@ -74,7 +75,8 @@ class FormSubmissionApiTests(APITestCase):
         response = self.client.post(url, payload, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data["template_type"], self.template.template_type)
+        self.assertEqual(
+            response.data["template_type"], self.template.template_type)
         self.assertEqual(FormSubmission.objects.count(), 1)
         submission = FormSubmission.objects.first()
         self.assertIsNone(submission.created_by)
@@ -83,7 +85,8 @@ class FormSubmissionApiTests(APITestCase):
 
     def test_create_two_submissions_for_two_templates(self):
         # Create second template (nhom-cau-hoi-chung)
-        chung_data = next(t for t in FORM_SCHEMAS if t["template_type"] == "nhom-cau-hoi-chung")
+        chung_data = next(
+            t for t in FORM_SCHEMAS if t["template_type"] == "nhom-cau-hoi-chung")
         chung_template = FormTemplate.objects.create(
             template_type=chung_data["template_type"],
             title=chung_data["title"],
@@ -122,7 +125,8 @@ class FormSubmissionApiTests(APITestCase):
                     {"phuong_phap": "Dot", "truoc_tham_gia": 80, "sau_tham_gia": 20},
                 ],
                 "xu_ly_goc_ra": [
-                    {"phuong_phap": "Chon dat", "truoc_tham_gia": 60, "sau_tham_gia": 10},
+                    {"phuong_phap": "Chon dat",
+                        "truoc_tham_gia": 60, "sau_tham_gia": 10},
                 ],
                 "xu_ly_phan_chan_nuoi": [
                     {"phuong_phap": "U phan", "truoc_tham_gia": 50, "sau_tham_gia": 70},
@@ -139,7 +143,8 @@ class FormSubmissionApiTests(APITestCase):
                     }
                 ],
                 "hoat_dong_truyen_thong": [
-                    {"hoat_dong": "Lop tap huan TOT", "da_nghe": "Đúng", "da_tham_du": "KHÔNG", "anh_huong": 3}
+                    {"hoat_dong": "Lop tap huan TOT", "da_nghe": "Đúng",
+                        "da_tham_du": "KHÔNG", "anh_huong": 3}
                 ],
             },
         }
