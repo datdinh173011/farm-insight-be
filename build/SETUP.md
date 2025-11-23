@@ -1,6 +1,6 @@
 # Farm Insight BE – Deployment Notes
 
-This repo lives at `~/farm-insight-be`. The commands below assume you run them inside that folder.
+This repo lives at `/home/farm-insight-be`. The commands below assume you run them inside that folder.
 
 ## Prepare environment
 ```bash
@@ -44,15 +44,15 @@ After=network.target
 [Service]
 User=www-data
 Group=www-data
-WorkingDirectory=/home/USER/farm-insight-be
+WorkingDirectory=/home/farm-insight-be
 Environment="DJANGO_SETTINGS_MODULE=config.settings"
 Environment="DJANGO_SECRET_KEY=change-me"
 Environment="DJANGO_DEBUG=false"
-ExecStart=/home/USER/farm-insight-be/.venv/bin/gunicorn app:app \
+ExecStart=/home/farm-insight-be/.venv/bin/gunicorn app:app \
     -w 1 -k uvicorn.workers.UvicornWorker \
-    --bind unix:/home/USER/farm-insight-be/run/farm-insight.sock \
-    --access-logfile /home/USER/farm-insight-be/logs/access.log \
-    --error-logfile /home/USER/farm-insight-be/logs/error.log
+    --bind unix:/home/farm-insight-be/run/farm-insight.sock \
+    --access-logfile /home/farm-insight-be/logs/access.log \
+    --error-logfile /home/farm-insight-be/logs/error.log
 Restart=always
 
 [Install]
@@ -65,14 +65,14 @@ Enable: `sudo systemctl daemon-reload && sudo systemctl enable --now farm-insigh
 ```
 server {
     listen 80;
-    server_name your.domain.com;
+    server_name isatsbangkhaosat.com;
 
     location /static/ {
-        alias /home/USER/farm-insight-be/staticfiles/;
+        alias /home/farm-insight-be/staticfiles/;
     }
 
     location / {
-        proxy_pass http://unix:/home/USER/farm-insight-be/run/farm-insight.sock;
+        proxy_pass http://unix:/home/farm-insight-be/run/farm-insight.sock;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
