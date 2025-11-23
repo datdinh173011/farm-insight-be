@@ -88,6 +88,7 @@ class FormSubmissionSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        user = self.context["request"].user if self.context.get(
-            "request") else None
+        user = self.context["request"].user if self.context.get("request") else None
+        if user and user.is_anonymous:
+            user = None
         return FormSubmission.objects.create(created_by=user, **validated_data)
