@@ -22,7 +22,7 @@ python manage.py runserver
 - `POST /api/auth/token/refresh/` – refresh JWT.
 - `GET /api/forms/templates/` – danh sách template (cấu trúc form + siêu dữ liệu PDF).
 - `GET /api/forms/templates/{template_type}/` – chi tiết template (lookup theo `template_type`).
-- `POST /api/forms/submissions/` – tạo câu trả lời cho template (truyền `template_type`, các trường thông tin hộ gia đình, `data` là JSON câu trả lời).
+- `POST /api/forms/submissions/` – tạo câu trả lời cho template (truyền `template_type`, các trường thông tin hộ gia đình, `data` là JSON câu trả lời). Endpoint này mở, không cần đăng nhập.
 - `GET /api/forms/submissions/` – danh sách bài làm của chính người dùng (admin xem được tất cả, hỗ trợ filter `?template_type=`).
 
 Mặc định tất cả endpoint (trừ register/token) yêu cầu header `Authorization: Bearer <access_token>`.

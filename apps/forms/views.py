@@ -15,6 +15,12 @@ class FormSubmissionViewSet(viewsets.ModelViewSet):
     serializer_class = FormSubmissionSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_permissions(self):
+        # Cho phép gửi form hoặc xem chi tiết submission không cần đăng nhập; các thao tác khác yêu cầu auth.
+        if self.action in {"create", "retrieve"}:
+            return [permissions.AllowAny()]
+        return super().get_permissions()
+
     def get_queryset(self):
         queryset = FormSubmission.objects.select_related("template")
         if self.request.user and self.request.user.is_staff:
