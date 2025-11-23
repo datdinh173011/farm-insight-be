@@ -823,4 +823,127 @@ FORM_SCHEMAS = [
             ]
         },
     },
+    {
+        "template_type": "u-phan-huu-co-tai-ruong",
+        "title": "Ủ phân hữu cơ tại ruộng",
+        "source_pdf": "form_pdf/251106 Phiếu phỏng vấn (Ủ phân hữu cơ tại ruộng).pdf",
+        "description": "Theo dõi hộ áp dụng ủ phân hữu cơ tại ruộng.",
+        "schema": {
+            "sections": [
+                {
+                    "title": "Thông tin hộ gia đình",
+                    "fields": [
+                        {"key": "ho_ten", "label": "Họ và tên người được phỏng vấn", "type": "text", "required": True},
+                        {"key": "nam_sinh", "label": "Năm sinh", "type": "number"},
+                        {"key": "so_dien_thoai", "label": "Số điện thoại liên hệ", "type": "text"},
+                        {"key": "thon", "label": "Thôn", "type": "text"},
+                        {"key": "xa", "label": "Xã", "type": "text"},
+                        {"key": "tinh", "label": "Tỉnh", "type": "text"},
+                    ],
+                },
+                {
+                    "title": "A. Quản lý phụ phẩm để ủ phân tại ruộng",
+                    "fields": [
+                        {
+                            "type": "table",
+                            "key": "quan_ly_phu_pham",
+                            "label": "Tình trạng phụ phẩm cây trồng dùng ủ phân",
+                            "columns": [
+                                {"key": "loai_cay_trong", "label": "Loại cây trồng", "type": "text", "required": True},
+                                {"key": "co_phan", "label": "Có áp dụng ủ phân", "type": "select", "options": ["Có", "Không"]},
+                                {"key": "dien_tich", "label": "Diện tích (sào/vụ)", "type": "number"},
+                                {"key": "phu_pham_san_ra", "label": "Khối lượng phụ phẩm (kg/sào)", "type": "number"},
+                                {"key": "phu_pham_su_dung", "label": "Khối lượng dùng ủ (kg/sào)", "type": "number"},
+                            ],
+                        }
+                    ],
+                },
+                {
+                    "title": "B. Quá trình ủ phân và sử dụng",
+                    "fields": [
+                        {
+                            "type": "table",
+                            "key": "qua_trinh_u",
+                            "label": "Thông tin mẻ ủ phân hữu cơ gần nhất",
+                            "columns": [
+                                {"key": "thoi_gian", "label": "Thời gian ủ (tháng/năm)", "type": "text"},
+                                {"key": "nguyen_lieu", "label": "Nguyên liệu/ phụ phẩm dùng ủ", "type": "text"},
+                                {"key": "khoi_luong", "label": "Khối lượng nguyên liệu (kg)", "type": "number"},
+                                {"key": "thoi_gian_hoan_thanh", "label": "Thời gian hoàn thành (ngày)", "type": "number"},
+                                {"key": "chi_phi_khac", "label": "Chi phí vật liệu/khác (đồng)", "type": "number"},
+                            ],
+                        },
+                        {
+                            "type": "table",
+                            "key": "su_dung_phan",
+                            "label": "Sử dụng phân hữu cơ cho cây trồng",
+                            "columns": [
+                                {"key": "ten_cay_trong", "label": "Tên cây trồng", "type": "text", "required": True},
+                                {"key": "dien_tich", "label": "Diện tích bón (sào)", "type": "number"},
+                                {"key": "khoi_luong_bon", "label": "Khối lượng phân bón (kg)", "type": "number"},
+                                {"key": "nang_suat", "label": "Năng suất (kg/sào)", "type": "number"},
+                                {"key": "gia_ban", "label": "Giá bán (đồng/kg)", "type": "number"},
+                            ],
+                        },
+                    ],
+                },
+            ]
+        },
+    },
+    {
+        "template_type": "xu-ly-goc-ra-che-pham",
+        "title": "Xử lý gốc rạ bằng chế phẩm sinh học",
+        "source_pdf": "form_pdf/251106 Phiếu phỏng vấn (Xử lý gốc rạ bằng chế phẩm sinh học).pdf",
+        "description": "Theo dõi hộ xử lý gốc rạ với chế phẩm sinh học.",
+        "schema": {
+            "sections": [
+                {
+                    "title": "Thông tin hộ gia đình",
+                    "fields": [
+                        {"key": "ho_ten", "label": "Họ và tên người được phỏng vấn", "type": "text", "required": True},
+                        {"key": "nam_sinh", "label": "Năm sinh", "type": "number"},
+                        {"key": "so_dien_thoai", "label": "Số điện thoại liên hệ", "type": "text"},
+                        {"key": "thon", "label": "Thôn", "type": "text"},
+                        {"key": "xa", "label": "Xã", "type": "text"},
+                        {"key": "tinh", "label": "Tỉnh", "type": "text"},
+                    ],
+                },
+                {
+                    "title": "A. Thực hành xử lý gốc rạ",
+                    "fields": [
+                        {
+                            "type": "table",
+                            "key": "xu_ly_goc_ra",
+                            "label": "Các phương pháp xử lý gốc rạ",
+                            "columns": [
+                                {"key": "phuong_phap", "label": "Phương pháp", "type": "text", "required": True},
+                                {"key": "truoc", "label": "Trước khi áp dụng (%)", "type": "number"},
+                                {"key": "sau", "label": "Sau khi áp dụng (%)", "type": "number"},
+                            ],
+                        }
+                    ],
+                },
+                {
+                    "title": "B. Ảnh hưởng và đánh giá",
+                    "fields": [
+                        {
+                            "type": "table",
+                            "key": "anh_huong",
+                            "label": "Tác động sau xử lý gốc rạ",
+                            "columns": [
+                                {"key": "chi_so", "label": "Chỉ số đánh giá", "type": "text", "required": True},
+                                {"key": "gia_tri", "label": "Giá trị/điểm", "type": "number"},
+                            ],
+                            "preset_rows": [
+                                "Giảm sâu bệnh",
+                                "Cải thiện đất",
+                                "Giảm chi phí",
+                                "Tác động môi trường",
+                            ],
+                        }
+                    ],
+                },
+            ]
+        },
+    },
 ]
