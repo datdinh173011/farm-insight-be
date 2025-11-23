@@ -8,7 +8,7 @@ original questionnaires.
 
 FORM_SCHEMAS = [
     {
-        "slug": "len-men-phu-pham",
+        "template_type": "len-men-phu-pham",
         "title": "Lên men phụ phẩm cây trồng làm thức ăn chăn nuôi",
         "source_pdf": "form_pdf/251106 Phiếu phỏng vấn (Lên men phụ phẩm cây trồng làm thức ăn chăn nuôi).pdf",
         "description": "Theo dõi hộ gia đình áp dụng kỹ thuật ủ lên men phụ phẩm cây trồng.",
@@ -100,7 +100,7 @@ FORM_SCHEMAS = [
         },
     },
     {
-        "slug": "nhom-cau-hoi-chung",
+        "template_type": "nhom-cau-hoi-chung",
         "title": "Nhóm câu hỏi chung (sau câu 37)",
         "source_pdf": "form_pdf/251106 Phiếu phỏng vấn (Nhóm câu hỏi chung, sau câu 37).pdf",
         "description": "Các câu hỏi chung về xử lý phụ phẩm, tập huấn và mức độ chấp thuận kỹ thuật.",
@@ -300,7 +300,7 @@ FORM_SCHEMAS = [
         },
     },
     {
-        "slug": "nuoi-ga-dem-lot",
+        "template_type": "nuoi-ga-dem-lot",
         "title": "Nuôi gà trên nền đệm lót sinh học dày",
         "source_pdf": "form_pdf/251106 Phiếu phỏng vấn (Nuôi gà trên nền đệm lót sinh học dày) (1).pdf",
         "description": "Theo dõi hộ nuôi gà với đệm lót sinh học dày và sử dụng phân ủ.",
@@ -412,7 +412,7 @@ FORM_SCHEMAS = [
         },
     },
     {
-        "slug": "nuoi-sau-canxi",
+        "template_type": "nuoi-sau-canxi",
         "title": "Nuôi sâu canxi",
         "source_pdf": "form_pdf/251106 Phiếu phỏng vấn (Nuôi sâu canxi).pdf",
         "description": "Theo dõi hộ áp dụng nuôi sâu canxi, sử dụng sâu và phân sâu.",
@@ -509,7 +509,7 @@ FORM_SCHEMAS = [
         },
     },
     {
-        "slug": "nuoi-trun-que",
+        "template_type": "nuoi-trun-que",
         "title": "Nuôi trùn quế",
         "source_pdf": "form_pdf/251106 Phiếu phỏng vấn (Nuôi trùn quế).pdf",
         "description": "Theo dõi hộ áp dụng nuôi trùn quế, sử dụng trùn và phân trùn.",

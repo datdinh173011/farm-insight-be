@@ -8,6 +8,7 @@ class FormTemplateViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, view
     queryset = FormTemplate.objects.all()
     serializer_class = FormTemplateSerializer
     permission_classes = [permissions.IsAuthenticated]
+    lookup_field = "template_type"
 
 
 class FormSubmissionViewSet(viewsets.ModelViewSet):
@@ -21,9 +22,9 @@ class FormSubmissionViewSet(viewsets.ModelViewSet):
         else:
             base = queryset.filter(created_by=self.request.user)
 
-        template_slug = self.request.query_params.get("template")
-        if template_slug:
-            base = base.filter(template__slug=template_slug)
+        template_type = self.request.query_params.get("template_type")
+        if template_type:
+            base = base.filter(template_type=template_type)
         status_param = self.request.query_params.get("status")
         if status_param:
             base = base.filter(status=status_param)

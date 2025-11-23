@@ -3,7 +3,7 @@ from django.db import models
 
 
 class FormTemplate(models.Model):
-    slug = models.SlugField(unique=True)
+    template_type = models.CharField(max_length=100, unique=True)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     source_pdf = models.CharField(max_length=255, blank=True)
@@ -25,11 +25,18 @@ class FormSubmission(models.Model):
     )
 
     template = models.ForeignKey(FormTemplate, on_delete=models.CASCADE, related_name="submissions")
+    template_type = models.CharField(max_length=100)
+    ho_ten = models.CharField(max_length=255)
+    nam_sinh = models.PositiveIntegerField(null=True, blank=True)
+    so_dien_thoai = models.CharField(max_length=30, blank=True)
+    thon = models.CharField(max_length=255, blank=True)
+    xa = models.CharField(max_length=255, blank=True)
+    tinh = models.CharField(max_length=255, blank=True)
+    data = models.JSONField(default=dict)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="submitted")
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name="form_submissions"
     )
-    data = models.JSONField(default=dict)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="submitted")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -37,4 +44,4 @@ class FormSubmission(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.template.slug} - {self.created_at:%Y-%m-%d}"
+        return f"{self.template.template_type} - {self.created_at:%Y-%m-%d}"

@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             name="FormTemplate",
             fields=[
                 ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
-                ("slug", models.SlugField(unique=True)),
+                ("template_type", models.CharField(max_length=100, unique=True)),
                 ("title", models.CharField(max_length=255)),
                 ("description", models.TextField(blank=True)),
                 ("source_pdf", models.CharField(blank=True, max_length=255)),
@@ -29,6 +29,13 @@ class Migration(migrations.Migration):
             name="FormSubmission",
             fields=[
                 ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("template_type", models.CharField(max_length=100)),
+                ("ho_ten", models.CharField(max_length=255)),
+                ("nam_sinh", models.PositiveIntegerField(blank=True, null=True)),
+                ("so_dien_thoai", models.CharField(blank=True, max_length=30)),
+                ("thon", models.CharField(blank=True, max_length=255)),
+                ("xa", models.CharField(blank=True, max_length=255)),
+                ("tinh", models.CharField(blank=True, max_length=255)),
                 ("data", models.JSONField(default=dict)),
                 (
                     "status",

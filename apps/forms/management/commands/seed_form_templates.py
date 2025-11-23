@@ -10,7 +10,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for template in FORM_SCHEMAS:
             obj, created = FormTemplate.objects.update_or_create(
-                slug=template["slug"],
+                template_type=template["template_type"],
                 defaults={
                     "title": template["title"],
                     "description": template.get("description", ""),
@@ -19,4 +19,4 @@ class Command(BaseCommand):
                 },
             )
             action = "Created" if created else "Updated"
-            self.stdout.write(self.style.SUCCESS(f"{action} template {obj.slug}"))
+            self.stdout.write(self.style.SUCCESS(f"{action} template {obj.template_type}"))
