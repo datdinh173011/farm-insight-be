@@ -1,7 +1,13 @@
 from rest_framework import mixins, permissions, viewsets
+from rest_framework.pagination import PageNumberPagination
 
 from .models import FormSubmission, FormTemplate
 from .serializers import FormSubmissionSerializer, FormTemplateSerializer
+
+
+class StandardPagination(PageNumberPagination):
+    page_size = 20
+    page_size_query_param = "page_size"
 
 
 class FormTemplateViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
@@ -14,6 +20,7 @@ class FormTemplateViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, view
 class FormSubmissionViewSet(viewsets.ModelViewSet):
     serializer_class = FormSubmissionSerializer
     permission_classes = [permissions.IsAuthenticated]
+    pagination_class = StandardPagination
 
     def get_permissions(self):
         # Cho phép gửi form hoặc xem chi tiết submission không cần đăng nhập; các thao tác khác yêu cầu auth.

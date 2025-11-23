@@ -23,7 +23,7 @@ python manage.py runserver
 - `GET /api/forms/templates/` – danh sách template (cấu trúc form + siêu dữ liệu PDF).
 - `GET /api/forms/templates/{template_type}/` – chi tiết template (lookup theo `template_type`).
 - `POST /api/forms/submissions/` – tạo câu trả lời cho template (truyền `template_type`, các trường thông tin hộ gia đình, `data` là JSON câu trả lời). Endpoint này mở, không cần đăng nhập.
-- `GET /api/forms/submissions/` – danh sách tất cả submissions (chỉ cần đăng nhập), hỗ trợ filter `?template_type=` và `?status=`.
+- `GET /api/forms/submissions/` – danh sách tất cả submissions (chỉ cần đăng nhập), hỗ trợ filter `?template_type=` và `?status=`; phân trang `?page=`, mặc định 20 bản ghi/trang.
 - Auth: `POST /api/auth/register/`, `POST /api/auth/token/`, `POST /api/auth/token/refresh/`, `POST /api/auth/logout/` (blacklist refresh token, requires auth header + refresh token in body).
 
 Mặc định tất cả endpoint (trừ register/token) yêu cầu header `Authorization: Bearer <access_token>`.
