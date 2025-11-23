@@ -22,11 +22,7 @@ class FormSubmissionViewSet(viewsets.ModelViewSet):
         return super().get_permissions()
 
     def get_queryset(self):
-        queryset = FormSubmission.objects.select_related("template")
-        if self.request.user and self.request.user.is_staff:
-            base = queryset
-        else:
-            base = queryset.filter(created_by=self.request.user)
+        base = FormSubmission.objects.select_related("template")
 
         template_type = self.request.query_params.get("template_type")
         if template_type:
