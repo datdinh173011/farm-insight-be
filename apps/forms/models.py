@@ -28,7 +28,7 @@ class FormSubmission(models.Model):
         FormTemplate, on_delete=models.CASCADE, related_name="submissions")
     template_type = models.CharField(max_length=100)
     ho_ten = models.CharField(max_length=255)
-    nam_sinh = models.PositiveIntegerField(null=True, blank=True)
+    nam_sinh = models.DateField(null=True, blank=True)
     so_dien_thoai = models.CharField(max_length=30, blank=True)
     thon = models.CharField(max_length=255, blank=True)
     xa = models.CharField(max_length=255, blank=True)
