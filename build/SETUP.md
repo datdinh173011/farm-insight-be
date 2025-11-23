@@ -1,18 +1,18 @@
 # Farm Insight BE – Deployment Notes
 
-This repo lives at `/home/farm-insight-be`. The commands below assume you run them inside that folder.
+This repo lives at `/home/farm-insight-be`. The commands below assume you run them inside that folder and the virtualenv is `/home/farm-insight-be/venv` (no leading dot).
 
 ## Prepare environment
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
 ## Database & static assets
 ```bash
-source .venv/bin/activate
+source venv/bin/activate
 python manage.py migrate
 python manage.py collectstatic --noinput    # output -> ./staticfiles
 python manage.py seed_form_templates
@@ -20,13 +20,13 @@ python manage.py seed_form_templates
 
 ## Run (development)
 ```bash
-source .venv/bin/activate
+source venv/bin/activate
 python manage.py runserver 0.0.0.0:8000
 ```
 
 ## Run (production via Gunicorn + Uvicorn worker)
 ```bash
-source .venv/bin/activate
+source venv/bin/activate
 gunicorn app:app -w 1 -k uvicorn.workers.UvicornWorker \
   --bind unix:$(pwd)/run/farm-insight.sock \
   --access-logfile logs/access.log \
@@ -42,13 +42,14 @@ Description=Farm Insight Django API
 After=network.target
 
 [Service]
-User=www-data
-Group=www-data
+# Set to an existing user on the server (e.g. root or www-data)
+User=root
+Group=root
 WorkingDirectory=/home/farm-insight-be
 Environment="DJANGO_SETTINGS_MODULE=config.settings"
 Environment="DJANGO_SECRET_KEY=change-me"
 Environment="DJANGO_DEBUG=false"
-ExecStart=/home/farm-insight-be/.venv/bin/gunicorn app:app \
+ExecStart=/home/farm-insight-be/venv/bin/gunicorn config.asgi:application \
     -w 1 -k uvicorn.workers.UvicornWorker \
     --bind unix:/home/farm-insight-be/run/farm-insight.sock \
     --access-logfile /home/farm-insight-be/logs/access.log \
@@ -64,7 +65,7 @@ Enable: `sudo systemctl daemon-reload && sudo systemctl enable --now farm-insigh
 `/etc/nginx/sites-available/farm-insight.conf`:
 ```
 server {
-    listen 80;
+    listen 81;
     server_name isatsbangkhaosat.com;
 
     location /static/ {
