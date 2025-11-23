@@ -84,7 +84,7 @@ server {
 Enable: `sudo ln -s /etc/nginx/sites-available/farm-insight.conf /etc/nginx/sites-enabled/ && sudo nginx -t && sudo systemctl restart nginx`.
 
 ## Serve frontend (static build) on port 80
-Giả sử FE đã build tại `/home/farm-insight-fe/dist` (file `index.html` nằm trong dist). Tạo vhost Nginx mới:
+Giả sử FE đã build tại `/home/farm-insight-be/dist` (file `index.html` nằm trong dist). Tạo vhost Nginx mới:
 
 ```
 sudo tee /etc/nginx/sites-available/farm-insight-fe.conf > /dev/null <<'EOF'
@@ -114,7 +114,7 @@ sudo nginx -t && sudo systemctl reload nginx
 ```
 
 Lưu ý:
-- Đặt đúng đường dẫn `root` tới thư mục `dist` của FE.
+- Đặt đúng đường dẫn `root` tới thư mục `dist` của FE (`/home/farm-insight-be/dist`).
 - Port 80 sẽ phục vụ FE, API vẫn ở 81 qua vhost khác.
 
 
