@@ -82,3 +82,8 @@ server {
 }
 ```
 Enable: `sudo ln -s /etc/nginx/sites-available/farm-insight.conf /etc/nginx/sites-enabled/ && sudo nginx -t && sudo systemctl restart nginx`.
+
+
+Reload và restart:
+sudo systemctl daemon-reload
+sudo systemctl restart farm-insight
