@@ -92,7 +92,7 @@ server {
     listen 80;
     server_name isatsbangkhaosat.com;
 
-    root /home/farm-insight-fe/dist;
+    root /home/farm-insight-be/dist;
     index index.html;
 
     # Single Page App fallback
