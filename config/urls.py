@@ -4,7 +4,7 @@ from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from apps.forms.views import FormSubmissionViewSet, FormTemplateViewSet
-from apps.accounts.views import RegisterView
+from apps.accounts.views import RegisterView, LogoutView
 
 router = routers.DefaultRouter()
 router.register(r"forms/templates", FormTemplateViewSet, basename="form-template")
@@ -15,5 +15,6 @@ urlpatterns = [
     path("api/auth/register/", RegisterView.as_view(), name="register"),
     path("api/auth/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/auth/logout/", LogoutView.as_view(), name="token_logout"),
     path("api/", include(router.urls)),
 ]
