@@ -83,6 +83,40 @@ server {
 ```
 Enable: `sudo ln -s /etc/nginx/sites-available/farm-insight.conf /etc/nginx/sites-enabled/ && sudo nginx -t && sudo systemctl restart nginx`.
 
+## Serve frontend (static build) on port 80
+Giả sử FE đã build tại `/home/farm-insight-fe/dist` (file `index.html` nằm trong dist). Tạo vhost Nginx mới:
+
+```
+sudo tee /etc/nginx/sites-available/farm-insight-fe.conf > /dev/null <<'EOF'
+server {
+    listen 80;
+    server_name isatsbangkhaosat.com;
+
+    root /home/farm-insight-fe/dist;
+    index index.html;
+
+    # Single Page App fallback
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Optional: serve static assets with caching
+    location ~* \.(js|css|png|jpg|jpeg|gif|svg|ico|woff2?)$ {
+        try_files $uri =404;
+        access_log off;
+        add_header Cache-Control "public, max-age=31536000";
+    }
+}
+EOF
+
+sudo ln -sf /etc/nginx/sites-available/farm-insight-fe.conf /etc/nginx/sites-enabled/farm-insight-fe.conf
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+Lưu ý:
+- Đặt đúng đường dẫn `root` tới thư mục `dist` của FE.
+- Port 80 sẽ phục vụ FE, API vẫn ở 81 qua vhost khác.
+
 
 Reload và restart:
 sudo systemctl daemon-reload
