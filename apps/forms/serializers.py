@@ -32,6 +32,18 @@ def _collect_required_keys(schema: dict) -> Set[str]:
     return required
 
 
+def _data_contains_key(data: dict, key: str) -> bool:
+    """Check if a required key exists with a truthy value at top-level or in list-of-dicts."""
+    if data.get(key):
+        return True
+    for value in data.values():
+        if isinstance(value, list):
+            for row in value:
+                if isinstance(row, dict) and row.get(key):
+                    return True
+    return False
+
+
 class FormSubmissionSerializer(serializers.ModelSerializer):
     template = serializers.PrimaryKeyRelatedField(
         queryset=FormTemplate.objects.all(), required=False)
@@ -66,11 +78,11 @@ class FormSubmissionSerializer(serializers.ModelSerializer):
 
         data = attrs.get("data") or {}
         required_keys = _collect_required_keys(template.schema)
-        missing = [key for key in required_keys if not data.get(key)]
-        if missing:
-            raise serializers.ValidationError(
-                {"data": f"Missing required answers for: {', '.join(missing)}"})
+        for key in required_keys:
+            if not _data_contains_key(data, key):
+                data[key] = ""
 
+        attrs["data"] = data
         attrs["template"] = template
         attrs["template_type"] = template.template_type
         return attrs
