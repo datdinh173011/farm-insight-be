@@ -26,7 +26,7 @@ python manage.py runserver
 - `GET /api/forms/submissions/` – danh sách tất cả submissions (chỉ cần đăng nhập), hỗ trợ filter `?template_type=` và `?status=`; phân trang `?page=`, mặc định 20 bản ghi/trang.
 - Auth: `POST /api/auth/register/`, `POST /api/auth/token/`, `POST /api/auth/token/refresh/`, `POST /api/auth/logout/` (blacklist refresh token, requires auth header + refresh token in body).
 - CORS: cho phép `http://localhost:3000`, `https://isatsbangkhaosat.com`, `https://isatsbangkhaosat.com:81`.
-- Lưu ý `nam_sinh` nhận định dạng ngày `YYYY-MM-DD` hoặc `YYYY/MM/DD`.
+- Lưu ý `nam_sinh` là năm sinh dạng số dương (ví dụ: `1985`).
 
 Mặc định tất cả endpoint (trừ register/token) yêu cầu header `Authorization: Bearer <access_token>`.
 
