@@ -18,4 +18,4 @@ jobs:
             cd /home/farm-insight-be
             git checkout main
             git pull
-            ./scripts/manage-environments.sh
+            sh ./scripts/manage-environments.sh
