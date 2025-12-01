@@ -48,7 +48,7 @@ class FormSubmissionSerializer(serializers.ModelSerializer):
     template = serializers.PrimaryKeyRelatedField(
         queryset=FormTemplate.objects.all(), required=False)
     template_type = serializers.CharField()
-    nam_sinh = serializers.DateField(required=False, allow_null=True, input_formats=["%Y-%m-%d", "%Y/%m/%d"])
+    nam_sinh = serializers.IntegerField(required=False, allow_null=True, min_value=0)
 
     class Meta:
         model = FormSubmission
