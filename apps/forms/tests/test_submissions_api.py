@@ -1,4 +1,8 @@
+from io import BytesIO
+
+from django.contrib.auth import get_user_model
 from django.urls import reverse
+from openpyxl import load_workbook
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -16,6 +20,9 @@ class FormSubmissionApiTests(APITestCase):
             description=template_data.get("description", ""),
             source_pdf=template_data.get("source_pdf", ""),
             schema=template_data["schema"],
+        )
+        self.user = get_user_model().objects.create_user(
+            username="exporter", password="password123"
         )
 
     def test_create_submission_for_nuoi_sau_canxi(self):
@@ -156,3 +163,54 @@ class FormSubmissionApiTests(APITestCase):
             set(FormSubmission.objects.values_list("template_type", flat=True)),
             {self.template.template_type, chung_template.template_type},
         )
+
+    def test_export_excel_contains_submission_row(self):
+        url = reverse("form-submission-list")
+        # Use a len-men-phu-pham template so the labels are available for export formatting.
+        len_men_data = next(
+            t for t in FORM_SCHEMAS if t["template_type"] == "len-men-phu-pham")
+        len_men_template = FormTemplate.objects.create(
+            template_type=len_men_data["template_type"],
+            title=len_men_data["title"],
+            description=len_men_data.get("description", ""),
+            source_pdf=len_men_data.get("source_pdf", ""),
+            schema=len_men_data["schema"],
+        )
+        payload = {
+            "template_type": len_men_template.template_type,
+            "ho_ten": "Nguyen Van A",
+            "nam_sinh": 1985,
+            "so_dien_thoai": "0909123456",
+            "thon": "Thon 1",
+            "xa": "Xa ABC",
+            "tinh": "Tinh XYZ",
+            "data": {
+                "sectionA": [{"tenPhuPhamCayTrong": "rom ra", "thangNamDau": "9/2023"}],
+                "sectionB": [],
+            },
+        }
+        self.client.post(url, payload, format="json")
+
+        export_url = reverse("form-submission-export-excel")
+        self.client.force_authenticate(user=self.user)
+        response = self.client.get(export_url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response["Content-Type"],
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
+
+        workbook = load_workbook(filename=BytesIO(response.content))
+        sheet_name = len_men_template.template_type[:31]
+        sheet = workbook[sheet_name]
+        headers = [cell.value for cell in sheet[1]]
+        row = [cell.value for cell in sheet[2]]
+        row_data = dict(zip(headers, row))
+
+        self.assertEqual(row_data["STT"], 1)
+        self.assertEqual(row_data["Loại Mẫu Form"], len_men_template.template_type)
+        self.assertEqual(row_data["Họ Tên"], payload["ho_ten"])
+        self.assertEqual(row_data["Năm Sinh"], payload["nam_sinh"])
+        first_field_header = "SECTIONA - Tên phụ phẩm cây trồng (sử dụng ủ lên men)"
+        self.assertIn("rom ra", row_data[first_field_header])
