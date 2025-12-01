@@ -1,0 +1,21 @@
+name: Main Pipeline
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build and restart services
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.BACKENDMAIN_HOST }}
+          username: root
+          password: ${{ secrets.BACKENDMAIN_PASSWORD }}
+          port: 22
+          script: |
+            cd /home/farm-insight-be
+            git checkout main
+            git pull
+            ./scripts/manage-environments.sh
