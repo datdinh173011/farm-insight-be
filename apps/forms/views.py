@@ -35,6 +35,7 @@ class FormSubmissionViewSet(viewsets.ModelViewSet):
     pagination_class = StandardPagination
 
     def get_permissions(self):
+        return [permissions.AllowAny()]
         # Cho phép gửi form hoặc xem chi tiết submission không cần đăng nhập; các thao tác khác yêu cầu auth.
         if self.action in {"create", "retrieve"}:
             return [permissions.AllowAny()]
