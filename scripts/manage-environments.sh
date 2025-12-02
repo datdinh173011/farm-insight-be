@@ -7,6 +7,7 @@ cd "$PROJECT_ROOT"
 
 # Activate virtualenv and apply migrations
 source "$PROJECT_ROOT/venv/bin/activate"
+pip install -r requirements.txt
 python manage.py migrate
 
 # Reload services
