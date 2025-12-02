@@ -12,8 +12,23 @@ class FormTemplateAdmin(admin.ModelAdmin):
 
 @admin.register(FormSubmission)
 class FormSubmissionAdmin(admin.ModelAdmin):
-    list_display = ("template", "created_by", "status", "created_at")
-    search_fields = ("template__title",
-                     "template__template_type", "created_by__username")
-    list_filter = ("status",)
+    list_display = (
+        "template",
+        "ho_ten",
+        "nam_sinh",
+        "so_dien_thoai",
+        "thon",
+        "xa",
+        "created_by",
+        "status",
+        "created_at",
+    )
+    search_fields = (
+        "template__title",
+        "template__template_type",
+        "created_by__username",
+        "ho_ten",
+        "nam_sinh",
+    )
+    list_filter = ("status", "ho_ten", "nam_sinh")
     readonly_fields = ("created_at", "updated_at")
